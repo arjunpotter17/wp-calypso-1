@@ -18,7 +18,7 @@ import { isMarketplaceProduct } from 'calypso/state/products-list/selectors';
 import PluginActionStatus from '../plugin-action-status';
 import { getAllowedPluginActions } from '../utils/get-allowed-plugin-actions';
 import { getPluginActionStatuses } from '../utils/get-plugin-action-statuses';
-import type { Plugin } from '../types';
+import type { ExtendedPlugin } from '../types';
 import type { SiteDetails } from '@automattic/data-stores';
 import type { MomentInput } from 'moment';
 import type { MouseEventHandler, PropsWithChildren } from 'react';
@@ -26,12 +26,12 @@ import type { MouseEventHandler, PropsWithChildren } from 'react';
 import './style.scss';
 
 interface Props {
-	item: Plugin;
+	item: ExtendedPlugin;
 	columnKey: string;
 	selectedSite?: SiteDetails;
 	isSmallScreen?: boolean;
 	className?: string;
-	updatePlugin?: ( plugin: Plugin ) => void;
+	updatePlugin?: ( plugin: ExtendedPlugin ) => void;
 }
 
 export default function PluginRowFormatter( {
@@ -216,7 +216,7 @@ export default function PluginRowFormatter( {
 				</div>
 			) : null;
 		case 'last-updated':
-			return item?.update && item?.last_updated ? (
+			return selectedSite && item?.sites[ selectedSite.ID ]?.update && item?.last_updated ? (
 				<span className="plugin-row-formatter__last-updated">
 					{ translate( '{{span}}Updated{{/span}} %(ago)s', {
 						components: {

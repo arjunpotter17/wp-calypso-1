@@ -198,7 +198,7 @@ export function deactivatePlugin( siteId, plugin ) {
 			pluginId,
 		};
 
-		if ( ! plugin.active ) {
+		if ( siteId && ! plugin.sites[ siteId ]?.active ) {
 			return dispatch( {
 				...defaultAction,
 				type: PLUGIN_DEACTIVATE_REQUEST_SUCCESS,
@@ -278,7 +278,10 @@ export function updatePlugin( siteId, plugin ) {
 			pluginId,
 		};
 
-		if ( ! plugin?.update || plugin?.update?.recentlyUpdated ) {
+		if (
+			plugin.sites &&
+			( ! plugin.sites[ siteId ]?.update || plugin.sites[ siteId ]?.update?.recentlyUpdated )
+		) {
 			return dispatch( { ...defaultAction, type: PLUGIN_ALREADY_UP_TO_DATE, data: plugin } );
 		}
 
@@ -316,7 +319,7 @@ export function enableAutoupdatePlugin( siteId, plugin ) {
 			pluginId,
 		};
 
-		if ( plugin.autoupdate ) {
+		if ( siteId && plugin.sites[ siteId ]?.autoupdate ) {
 			return dispatch( {
 				...defaultAction,
 				type: PLUGIN_AUTOUPDATE_ENABLE_REQUEST_SUCCESS,
@@ -359,7 +362,7 @@ export function disableAutoupdatePlugin( siteId, plugin ) {
 			pluginId,
 		};
 
-		if ( ! plugin.autoupdate ) {
+		if ( siteId && ! plugin.sites[ siteId ]?.autoupdate ) {
 			return dispatch( {
 				...defaultAction,
 				type: PLUGIN_AUTOUPDATE_DISABLE_REQUEST_SUCCESS,
@@ -400,7 +403,7 @@ export function togglePluginAutoUpdate( siteId, plugin ) {
 			return;
 		}
 
-		if ( ! plugin.autoupdate ) {
+		if ( siteId && ! plugin.sites[ siteId ]?.autoupdate ) {
 			dispatch( enableAutoupdatePlugin( siteId, plugin ) );
 		} else {
 			dispatch( disableAutoupdatePlugin( siteId, plugin ) );

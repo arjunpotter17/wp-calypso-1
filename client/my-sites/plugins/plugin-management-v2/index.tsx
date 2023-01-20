@@ -8,21 +8,21 @@ import TextPlaceholder from 'calypso/jetpack-cloud/sections/partner-portal/text-
 import { resetPluginStatuses } from 'calypso/state/plugins/installed/status/actions';
 import PluginsList from './plugins-list';
 import UpdatePlugins from './update-plugins';
-import type { Plugin } from './types';
+import type { ExtendedPlugin } from './types';
 import type { SiteDetails } from '@automattic/data-stores';
 
 import './style.scss';
 
 interface Props {
-	plugins: Array< Plugin >;
+	plugins: Array< ExtendedPlugin >;
 	isLoading: boolean;
 	requestError: boolean;
-	selectedSite: SiteDetails;
+	selectedSite?: SiteDetails;
 	searchTerm: string;
 	isBulkManagementActive: boolean;
 	toggleBulkManagement: () => void;
-	removePluginNotice: ( plugin: Plugin ) => void;
-	updatePlugin: ( plugin: Plugin ) => void;
+	removePluginNotice: ( plugin: ExtendedPlugin ) => void;
+	updatePlugin: ( plugin: ExtendedPlugin ) => void;
 	isJetpackCloud: boolean;
 }
 export default function PluginManagementV2( {

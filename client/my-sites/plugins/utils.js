@@ -43,7 +43,7 @@ const getConfirmationText = ( sites, selectedPlugins, actionText ) => {
 
 		Object.keys( plugin.sites ).forEach( ( siteId ) => {
 			const site = sites.find( ( s ) => s.ID === parseInt( siteId ) );
-			if ( site.canUpdateFiles ) {
+			if ( site && site.canUpdateFiles ) {
 				sitesList[ site.ID ] = true;
 				siteName = site.title;
 			}
@@ -128,20 +128,18 @@ export function handleUpdatePlugins( plugins, updateAction, pluginsOnSites ) {
 	const updatedPlugins = new Set();
 	const updatedSites = new Set();
 
-	plugins
-		// only consider plugins needing an update
-		.filter( ( plugin ) => plugin.update )
-		.forEach( ( plugin ) => {
-			Object.entries( plugin.sites )
-				// only consider the sites where the those plugins are installed
-				.filter( ( [ , sitePlugin ] ) => sitePlugin.update?.new_version )
-				.forEach( ( [ siteId ] ) => {
-					updatedPlugins.add( plugin.slug );
-					updatedSites.add( siteId );
-					const sitePlugin = getSitePlugin( plugin, siteId, pluginsOnSites );
-					return updateAction( siteId, sitePlugin );
-				} );
-		} );
+	for ( const plugin of plugins ) {
+		for ( const [ siteId, site ] of Object.entries( plugin.sites ) ) {
+			if ( ! site.update || ! site.update?.new_version ) {
+				continue;
+			}
+
+			updatedPlugins.add( plugin.slug );
+			updatedSites.add( siteId );
+			const sitePlugin = getSitePlugin( plugin, siteId, pluginsOnSites );
+			updateAction( siteId, sitePlugin );
+		}
+	}
 
 	recordTracksEvent( 'calypso_plugins_bulk_action_execute', {
 		action: 'updating',

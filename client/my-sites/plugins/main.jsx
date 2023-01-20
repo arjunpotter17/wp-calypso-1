@@ -30,7 +30,7 @@ import { recordGoogleEvent, recordTracksEvent } from 'calypso/state/analytics/ac
 import { appendBreadcrumb, updateBreadcrumbs } from 'calypso/state/breadcrumb/actions';
 import { getBreadcrumbs } from 'calypso/state/breadcrumb/selectors';
 import {
-	getPlugins,
+	getFilteredAndSortedPlugins,
 	isRequestingForSites,
 	isRequestingForAllSites,
 	requestPluginsError,
@@ -60,6 +60,10 @@ import PluginsList from './plugins-list';
 
 import './style.scss';
 
+// Too many plugins will cause multiple requires to wporg which degrades performance,
+// so this constant disables wporg data for these cases.
+const WPORG_PLUGIN_COUNT_CUTOFF = 20;
+
 export class PluginsMain extends Component {
 	constructor( props ) {
 		super( props );
@@ -79,12 +83,14 @@ export class PluginsMain extends Component {
 			search,
 		} = this.props;
 
-		currentPlugins.map( ( plugin ) => {
-			const pluginData = this.props.wporgPlugins?.[ plugin.slug ];
-			if ( ! pluginData ) {
-				this.props.wporgFetchPluginData( plugin.slug );
-			}
-		} );
+		if ( currentPlugins.length <= WPORG_PLUGIN_COUNT_CUTOFF ) {
+			currentPlugins.forEach( ( plugin ) => {
+				const pluginData = this.props.wporgPlugins?.[ plugin.slug ];
+				if ( ! pluginData ) {
+					this.props.wporgFetchPluginData( plugin.slug );
+				}
+			} );
+		}
 
 		if (
 			( prevProps.isRequestingSites && ! this.props.isRequestingSites ) ||
@@ -177,7 +183,7 @@ export class PluginsMain extends Component {
 	addWporgDataToPlugins( plugins ) {
 		return plugins.map( ( plugin ) => {
 			const pluginData = this.props.wporgPlugins?.[ plugin.slug ];
-			return Object.assign( {}, plugin, pluginData );
+			return pluginData ? Object.assign( {}, plugin, pluginData ) : plugin;
 		} );
 	}
 
@@ -559,8 +565,8 @@ export default flow(
 			const selectedSiteId = getSelectedSiteId( state );
 			const visibleSiteIds = siteObjectsToSiteIds( getVisibleSites( sites ) ) ?? [];
 			const siteIds = siteObjectsToSiteIds( sites ) ?? [];
-			const pluginsWithUpdates = getPlugins( state, siteIds, 'updates' );
-			const allPlugins = getPlugins( state, siteIds, 'all' );
+			const pluginsWithUpdates = getFilteredAndSortedPlugins( state, siteIds, 'updates' );
+			const allPlugins = getFilteredAndSortedPlugins( state, siteIds, 'all' );
 			const jetpackNonAtomic =
 				isJetpackSite( state, selectedSiteId ) && ! isAtomicSite( state, selectedSiteId );
 			const hasManagePlugins =
@@ -585,8 +591,8 @@ export default flow(
 					selectedSite && canJetpackSiteUpdateFiles( state, selectedSiteId ),
 				wporgPlugins: getAllWporgPlugins( state ),
 				isRequestingSites: isRequestingSites( state ),
-				currentPlugins: getPlugins( state, siteIds, filter ),
-				currentPluginsOnVisibleSites: getPlugins( state, visibleSiteIds, filter ),
+				currentPlugins: getFilteredAndSortedPlugins( state, siteIds, filter ),
+				currentPluginsOnVisibleSites: getFilteredAndSortedPlugins( state, visibleSiteIds, filter ),
 				pluginUpdateCount: pluginsWithUpdates && pluginsWithUpdates.length,
 				pluginsWithUpdates,
 				allPluginsCount: allPlugins && allPlugins.length,

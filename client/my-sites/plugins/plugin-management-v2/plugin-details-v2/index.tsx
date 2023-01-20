@@ -1,6 +1,7 @@
 import { useTranslate } from 'i18n-calypso';
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import QueryAllJetpackSitesPlugins from 'calypso/components/data/query-all-jetpack-sites-plugins';
 import QueryEligibility from 'calypso/components/data/query-atat-eligibility';
 import QueryJetpackPlugins from 'calypso/components/data/query-jetpack-plugins';
 import QueryJetpackSitesFeatures from 'calypso/components/data/query-jetpack-sites-features';
@@ -18,7 +19,7 @@ import {
 } from 'calypso/state/plugins/installed/selectors';
 import { resetPluginStatuses } from 'calypso/state/plugins/installed/status/actions';
 import { isFetching as isWporgPluginFetchingSelector } from 'calypso/state/plugins/wporg/selectors';
-import type { Plugin } from '../types';
+import type { ExtendedPlugin } from '../types';
 import type { SiteDetails } from '@automattic/data-stores';
 
 import './style.scss';
@@ -26,7 +27,7 @@ import './style.scss';
 interface Props {
 	selectedSite: SiteDetails;
 	pluginSlug: string;
-	fullPlugin: Plugin;
+	fullPlugin: ExtendedPlugin;
 	sitesWithPlugins: Array< SiteDetails >;
 	showPlaceholder: boolean;
 	isMarketplaceProduct: boolean;
@@ -76,7 +77,11 @@ export default function PluginDetailsV2( {
 
 	return (
 		<div className="plugin-details-v2">
-			<QueryJetpackPlugins siteIds={ siteIds } />
+			{ siteIds.length === 1 ? (
+				<QueryJetpackPlugins siteIds={ siteIds } />
+			) : (
+				<QueryAllJetpackSitesPlugins />
+			) }
 			<QueryEligibility siteId={ selectedSite?.ID } />
 			<QueryJetpackSitesFeatures />
 			<QueryProductsList persist />
