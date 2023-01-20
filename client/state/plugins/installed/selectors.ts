@@ -165,7 +165,6 @@ export const getFilteredAndSortedPlugins = createSelector(
 		// altering it for everyone.
 		const allPluginsForSites: { [ pluginSlug: string ]: Plugin } = cloneDeep(
 			siteIds
-				// .map( ( siteId: any ) => Number( siteId ) ) // TODO
 				.map( ( siteId: number ) => allPluginsIndexedBySiteId[ siteId ] )
 				.filter( ( plugin ) => !! plugin )
 				.reduce( ( accumulator, current ) => ( { ...accumulator, ...current } ), {} )
@@ -196,13 +195,11 @@ export function getPluginsWithUpdates( state: AppState, siteIds: number[] ) {
 	return filter( getFilteredAndSortedPlugins( state, siteIds, undefined ), _filters.updates ).map(
 		( plugin ) => ( {
 			...plugin,
-			// version: plugin?.update?.new_version, // TODO
 			type: 'plugin',
 		} )
 	);
 }
 
-// TODO: evaluate this
 export function getPluginsOnSites( state: AppState, plugins: Plugin[] ) {
 	return Object.values( plugins ).reduce(
 		( acc: { [ pluginSlug: string ]: Plugin }, plugin: Plugin ) => {
