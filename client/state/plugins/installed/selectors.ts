@@ -25,24 +25,24 @@ const _filters: { [ key in PluginFilter ]: ( plugin: Plugin ) => boolean } = {
 		return true;
 	},
 	active: function ( plugin: Plugin ) {
-		return !! (
+		return (
 			some( plugin.sites, function ( site ) {
 				return site.active;
-			} ) || plugin.statusRecentlyChanged
+			} ) || !! plugin.statusRecentlyChanged
 		);
 	},
 	inactive: function ( plugin: Plugin ) {
-		return !! (
+		return (
 			some( plugin.sites, function ( site ) {
 				return ! site.active;
-			} ) || plugin.statusRecentlyChanged
+			} ) || !! plugin.statusRecentlyChanged
 		);
 	},
 	updates: function ( plugin: Plugin ) {
-		return !! (
+		return (
 			some( plugin.sites, function ( site ) {
 				return !! site.update && ! site.update.recentlyUpdated;
-			} ) || plugin.statusRecentlyChanged
+			} ) || !! plugin.statusRecentlyChanged
 		);
 	},
 };
