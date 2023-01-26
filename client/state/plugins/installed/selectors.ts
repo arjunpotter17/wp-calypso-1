@@ -165,7 +165,7 @@ export const getFilteredAndSortedPlugins = createSelector(
 		const allPluginsForSites: { [ pluginSlug: string ]: Plugin } = cloneDeep(
 			siteIds
 				.map( ( siteId: number ) => allPluginsIndexedBySiteId[ siteId ] )
-				.filter( ( plugin ) => !! plugin )
+				.filter( Boolean )
 				.reduce( ( accumulator, current ) => ( { ...accumulator, ...current } ), {} )
 		);
 
