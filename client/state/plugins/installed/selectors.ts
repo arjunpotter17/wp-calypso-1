@@ -1,5 +1,5 @@
 import { createSelector } from '@automattic/state-utils';
-import { cloneDeep, filter, get, omit, pick, some, sortBy } from 'lodash';
+import { cloneDeep, filter, get, pick, some, sortBy } from 'lodash';
 import {
 	getSite,
 	getSiteTitle,
@@ -99,9 +99,8 @@ export const getAllPluginsIndexedByPluginSlug = createSelector(
 
 				const pluginsForSite = installedPlugins[ siteId ] || [];
 				pluginsForSite.forEach( ( plugin: InstalledPluginData ) => {
-					const sitePluginProperties = [ 'active', 'autoupdate', 'update', 'version' ];
-					const sitePluginInfo = pick( plugin, sitePluginProperties );
-					const otherPluginInfo = omit( plugin, sitePluginProperties );
+					const { active, autoupdate, update, version, ...otherPluginInfo } = plugin;
+					const sitePluginInfo = { active, autoupdate, update, version };
 
 					plugins[ plugin.slug ] = {
 						...plugins[ plugin.slug ],
@@ -233,13 +232,15 @@ export function getPluginOnSites( state: AppState, siteIds: number[], pluginSlug
 export function getPluginOnSite( state: AppState, siteId: number, pluginSlug: string ) {
 	const plugin = getAllPluginsIndexedByPluginSlug( state )[ pluginSlug ];
 
+	const { sites, ...pluginWithoutSites } = plugin;
+
 	return plugin && plugin.sites[ siteId ]
 		? // Because this is a plugin for a single site context only the data for the selected
 		  // site is included. When I changed this file to TypeScript I found that some code
 		  // assumes it will be on the plugin object, while other code assumes it will be on the
 		  // sites object, so I included both.
 		  {
-				...omit( plugin, [ 'sites' ] ),
+				...pluginWithoutSites,
 				...plugin.sites[ siteId ],
 				...{ sites: { [ siteId ]: plugin.sites[ siteId ] } },
 		  }
