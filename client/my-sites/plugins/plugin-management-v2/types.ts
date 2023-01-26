@@ -68,6 +68,8 @@ export type PluginActionStatusMessage = {
 	};
 };
 
+// Some component code adds properties onto the plugin objects and then passes that to other components.
+// This type is used to account for that behavior.
 export type ExtendedPlugin = Plugin & {
 	isSelectable?: boolean;
 	isSelected: boolean;
