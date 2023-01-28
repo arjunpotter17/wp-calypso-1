@@ -5,19 +5,19 @@ import PluginCommonList from '../plugin-common/plugin-common-list';
 import PluginManageConnection from '../plugin-manage-connection';
 import PluginRowFormatter from '../plugin-row-formatter';
 import RemovePlugin from '../remove-plugin';
-import type { Columns, PluginRowFormatterArgs, ExtendedPlugin } from '../types';
+import type { Columns, PluginRowFormatterArgs, PluginComponentProps } from '../types';
 import type { SiteDetails } from '@automattic/data-stores';
 
 import '../style.scss';
 
 interface Props {
 	selectedSite?: SiteDetails;
-	items: Array< ExtendedPlugin >;
+	items: Array< PluginComponentProps >;
 	isLoading: boolean;
 	columns: Columns;
 	className?: string;
-	removePluginNotice: ( plugin: ExtendedPlugin ) => void;
-	updatePlugin: ( plugin: ExtendedPlugin ) => void;
+	removePluginNotice: ( plugin: PluginComponentProps ) => void;
+	updatePlugin: ( plugin: PluginComponentProps ) => void;
 }
 
 export default function PluginsList( {
@@ -51,12 +51,12 @@ export default function PluginsList( {
 		} );
 	};
 
-	const onRemoveClick = ( plugin: ExtendedPlugin ) => () => {
+	const onRemoveClick = ( plugin: PluginComponentProps ) => () => {
 		removePluginNotice( plugin );
 		trackRemovePlugin( plugin.slug );
 	};
 
-	const renderActions = ( plugin: ExtendedPlugin ) => {
+	const renderActions = ( plugin: PluginComponentProps ) => {
 		return (
 			<>
 				<PopoverMenuItem

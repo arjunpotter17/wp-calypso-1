@@ -1,12 +1,12 @@
 import PluginRemoveButton from '../../plugin-remove-button';
-import type { ExtendedPlugin } from '../types';
+import type { PluginComponentProps } from '../types';
 import type { SiteDetails } from '@automattic/data-stores';
 
 import '../style.scss';
 
 interface Props {
 	site: SiteDetails;
-	plugin: ExtendedPlugin;
+	plugin: PluginComponentProps;
 }
 
 export default function RemovePlugin( { site, plugin }: Props ) {

@@ -33,7 +33,7 @@ export interface RowFormatterArgs {
 	selectedSite?: SiteDetails;
 }
 export interface PluginRowFormatterArgs extends RowFormatterArgs {
-	item: ExtendedPlugin;
+	item: PluginComponentProps;
 }
 export interface SiteRowFormatterArgs extends RowFormatterArgs {
 	item: SiteDetails;
@@ -70,7 +70,7 @@ export type PluginActionStatusMessage = {
 
 // Some component code adds properties onto the plugin objects and then passes that to other components.
 // This type is used to account for that behavior.
-export type ExtendedPlugin = Plugin & {
+export type PluginComponentProps = Plugin & {
 	isSelectable?: boolean;
 	isSelected: boolean;
 	isMarketplaceProduct?: boolean;
