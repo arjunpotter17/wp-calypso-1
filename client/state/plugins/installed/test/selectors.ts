@@ -1,5 +1,5 @@
 import deepFreeze from 'deep-freeze';
-import { omit, pick } from 'lodash';
+import { pick } from 'lodash';
 import {
 	DEACTIVATE_PLUGIN,
 	ENABLE_AUTOUPDATE_PLUGIN,
@@ -180,7 +180,7 @@ describe( 'Installed plugin selectors', () => {
 			const siteWithPlugin = {
 				[ siteTwoId ]: pick( jetpack, [ 'active', 'autoupdate', 'update', 'version' ] ),
 			};
-			const pluginProperties = omit( jetpack, [ 'active', 'autoupdate', 'update', 'version' ] );
+			const { active, autoupdate, update, version, ...pluginProperties } = jetpack;
 			expect( plugins ).toEqual(
 				expect.arrayContaining( [ { ...pluginProperties, sites: siteWithPlugin } ] )
 			);
@@ -255,7 +255,7 @@ describe( 'Installed plugin selectors', () => {
 				[ siteOneId ]: pick( helloDolly, [ 'active', 'autoupdate', 'update', 'version' ] ),
 				[ siteTwoId ]: pick( helloDolly, [ 'active', 'autoupdate', 'update', 'version' ] ),
 			};
-			const pluginProperties = omit( helloDolly, [ 'active', 'autoupdate', 'update', 'version' ] );
+			const { active, autoupdate, update, version, ...pluginProperties } = helloDolly;
 			expect( plugin ).toEqual( { ...pluginProperties, sites: sitesWithPlugins } );
 		} );
 	} );
