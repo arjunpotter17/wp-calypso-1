@@ -30,7 +30,7 @@ export default function UpdatePlugin( { plugin, selectedSite, className, updateP
 		? [ plugin.sites[ selectedSite.ID ].update?.new_version ]
 		: Object.values( plugin.sites )
 				.map( ( site ) => site.update?.new_version )
-				.filter( ( x ) => x );
+				.filter( Boolean );
 
 	const currentVersionsRange = useMemo( () => {
 		const currentVersions = selectedSite
