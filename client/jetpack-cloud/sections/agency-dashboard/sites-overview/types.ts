@@ -57,6 +57,7 @@ export interface Site {
 	isSelected?: boolean;
 	site_stats: SiteStats;
 	onSelect?: ( value: boolean ) => void;
+	latest_stats: number;
 }
 export interface SiteNode {
 	value: Site;
@@ -97,6 +98,7 @@ export interface MonitorNode {
 }
 export interface SiteData {
 	site: SiteNode;
+	stats: StatsNode;
 	backup: BackupNode;
 	scan: ScanNode;
 	plugin: PluginNode;
