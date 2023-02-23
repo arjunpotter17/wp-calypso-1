@@ -3,6 +3,7 @@ import { Button } from '@wordpress/components';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { useEffect, useRef, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
+import { isURL } from '@wordpress/url';
 import React from 'react';
 import NuxModal from '../nux-modal';
 import postPublishedImage from './images/post-published.svg';
@@ -29,7 +30,11 @@ const PostPublishedModal: React.FC = () => {
 		useDispatch( 'automattic/wpcom-welcome-guide' );
 
 	const { siteUrlOption, launchpadScreenOption, siteIntentOption } = window?.launchpadOptions || {};
-	const siteUrl = siteUrlOption.replace( /^https?:\/\//, '' );
+
+	let siteUrl = '';
+	if ( isURL( siteUrlOption ) ) {
+		siteUrl = new URL( siteUrlOption ).hostname;
+	}
 
 	useEffect( () => {
 		fetchShouldShowFirstPostPublishedModal();
