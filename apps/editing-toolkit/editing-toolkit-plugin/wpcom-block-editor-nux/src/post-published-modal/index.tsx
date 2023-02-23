@@ -33,6 +33,7 @@ const PostPublishedModal: React.FC = () => {
 
 	let siteUrl = '';
 	if ( isURL( siteUrlOption ) ) {
+		// https://mysite.wordpress.com/path becomes mysite.wordpress.com
 		siteUrl = new URL( siteUrlOption ).hostname;
 	}
 
