@@ -132,6 +132,7 @@ describe( 'reducer', () => {
 						id: CONTACT_PAGE,
 						title: 'Contact',
 						content: '',
+						useFillerContent: false,
 						media: [
 							getSingleMediaPlaceholder( 'IMAGE' ),
 							getSingleMediaPlaceholder( 'IMAGE' ),
@@ -143,6 +144,7 @@ describe( 'reducer', () => {
 						id: VIDEO_GALLERY_PAGE,
 						title: 'Video Gallery',
 						content: '',
+						useFillerContent: false,
 						media: [
 							getSingleMediaPlaceholder( 'VIDEO' ),
 							getSingleMediaPlaceholder( 'VIDEO' ),
@@ -154,6 +156,7 @@ describe( 'reducer', () => {
 						id: PORTFOLIO_PAGE,
 						title: 'Portfolio',
 						content: '',
+						useFillerContent: false,
 						media: [
 							getSingleMediaPlaceholder( 'IMAGE' ),
 							getSingleMediaPlaceholder( 'IMAGE' ),
@@ -185,18 +188,21 @@ describe( 'reducer', () => {
 								title: 'Contact',
 								content: 'test contact page content',
 								media: [ { url: 'test media url 1', mediaType: 'IMAGE' } ],
+								useFillerContent: false,
 							},
 							{
 								id: VIDEO_GALLERY_PAGE,
 								title: 'Video Gallery',
 								content: 'test video gallery page content',
 								media: [ { url: 'test media url 2', mediaType: 'VIDEO' } ],
+								useFillerContent: true,
 							},
 							{
 								id: PORTFOLIO_PAGE,
 								title: 'Portfolio',
 								content: 'test portfolio page content',
 								media: [ { url: 'test media url 3', mediaType: 'IMAGE' } ],
+								useFillerContent: false,
 							},
 						],
 						siteLogoUrl: '',
@@ -220,6 +226,7 @@ describe( 'reducer', () => {
 							getSingleMediaPlaceholder( 'IMAGE' ),
 							getSingleMediaPlaceholder( 'IMAGE' ),
 						],
+						useFillerContent: false,
 					},
 					{
 						id: VIDEO_GALLERY_PAGE,
@@ -231,6 +238,7 @@ describe( 'reducer', () => {
 							getSingleMediaPlaceholder( 'VIDEO' ),
 							getSingleMediaPlaceholder( 'VIDEO' ),
 						],
+						useFillerContent: true,
 					},
 					{
 						id: PORTFOLIO_PAGE,
@@ -246,6 +254,7 @@ describe( 'reducer', () => {
 							getSingleMediaPlaceholder( 'IMAGE' ),
 							getSingleMediaPlaceholder( 'IMAGE' ),
 						],
+						useFillerContent: false,
 					},
 				],
 			},

@@ -100,7 +100,7 @@ export function updateFeedback( feedback: string ) {
 export function websiteContentFieldChanged( payload: {
 	pageId: string;
 	fieldName: string;
-	fieldValue: string;
+	fieldValue: string | boolean;
 } ) {
 	return {
 		type: SIGNUP_STEPS_WEBSITE_FIELD_CHANGED,
@@ -186,6 +186,7 @@ export function initializeWebsiteContentForm(
 			displayEmail: savedContent?.displayEmail || undefined,
 			displayPhone: savedContent?.displayPhone || undefined,
 			displayAddress: savedContent?.displayAddress || undefined,
+			useFillerContent: savedContent?.useFillerContent || false,
 			media: getInitialMediaState( pageId, savedContent?.media ),
 		};
 	} );
