@@ -57,7 +57,6 @@ export interface Site {
 	isSelected?: boolean;
 	site_stats: SiteStats;
 	onSelect?: ( value: boolean ) => void;
-	// site_stats: StatsSettings;
 	total: number;
 }
 export interface SiteNode {
@@ -69,6 +68,7 @@ export interface SiteNode {
 
 export interface StatsNode {
 	type: AllowedTypes;
+	status: AllowedStatusTypes | string;
 	data: SiteStats;
 }
 export interface BackupNode {
