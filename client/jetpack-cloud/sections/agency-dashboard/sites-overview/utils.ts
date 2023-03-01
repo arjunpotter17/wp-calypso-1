@@ -99,6 +99,10 @@ const backupEventNames: StatusEventNames = {
 		small_screen: 'calypso_jetpack_agency_dashboard_backup_failed_click_small_screen',
 		large_screen: 'calypso_jetpack_agency_dashboard_backup_failed_click_large_screen',
 	},
+	critical: {
+		small_screen: 'calypso_jetpack_agency_dashboard_backup_failed_click_small_screen',
+		large_screen: 'calypso_jetpack_agency_dashboard_backup_failed_click_large_screen',
+	},
 	warning: {
 		small_screen: 'calypso_jetpack_agency_dashboard_backup_warning_click_small_screen',
 		large_screen: 'calypso_jetpack_agency_dashboard_backup_warning_click_large_screen',
@@ -487,5 +491,28 @@ export const getSiteCountText = ( sites: Array< Site > ) => {
 	return translate( '%(siteCount)d sites', {
 		args: { siteCount: sites.length },
 		comment: '%(siteCount) is no of sites selected, e.g. "2 sites"',
+	} );
+};
+
+export const getMemoryHumanReadable = ( memory: number ) => {
+	// return KB if less than 1MB, MB if less than 1GB, GB otherwise
+	if ( memory < 1024 * 1024 ) {
+		return translate( '%(memory)dKB', {
+			args: {
+				memory: Math.round( memory / 1024 ),
+			},
+		} );
+	}
+	if ( memory < 1024 * 1024 * 1024 ) {
+		return translate( '%(memory)dMB', {
+			args: {
+				memory: Math.round( memory / 1024 / 1024 ),
+			},
+		} );
+	}
+	return translate( '%(memory)dGB', {
+		args: {
+			memory: Math.round( memory / 1024 / 1024 / 1024 ),
+		},
 	} );
 };

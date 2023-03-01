@@ -1,4 +1,5 @@
 import classNames from 'classnames';
+import BackupStorage from './backup-storage';
 import InsightsStats from './insights-stats';
 import type { Site } from '../types';
 
@@ -10,7 +11,7 @@ interface Props {
 	isSmallScreen?: boolean;
 }
 
-const defaultColumns = [ 'stats' ];
+const defaultColumns = [ 'stats', 'backup' ];
 
 export default function SiteExpandedContent( {
 	site,
@@ -26,6 +27,7 @@ export default function SiteExpandedContent( {
 			} ) }
 		>
 			{ columns.includes( 'stats' ) && stats && <InsightsStats stats={ stats } /> }
+			{ columns.includes( 'backup' ) && stats && <BackupStorage site={ site } /> }
 		</div>
 	);
 }
