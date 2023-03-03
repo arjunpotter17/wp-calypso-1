@@ -493,26 +493,3 @@ export const getSiteCountText = ( sites: Array< Site > ) => {
 		comment: '%(siteCount) is no of sites selected, e.g. "2 sites"',
 	} );
 };
-
-export const getMemoryHumanReadable = ( memory: number ) => {
-	// return KB if less than 1MB, MB if less than 1GB, GB otherwise
-	if ( memory < 1024 * 1024 ) {
-		return translate( '%(memory)dKB', {
-			args: {
-				memory: Math.round( memory / 1024 ),
-			},
-		} );
-	}
-	if ( memory < 1024 * 1024 * 1024 ) {
-		return translate( '%(memory)dMB', {
-			args: {
-				memory: Math.round( memory / 1024 / 1024 ),
-			},
-		} );
-	}
-	return translate( '%(memory)dGB', {
-		args: {
-			memory: Math.round( memory / 1024 / 1024 / 1024 ),
-		},
-	} );
-};
