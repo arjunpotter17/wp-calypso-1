@@ -193,6 +193,11 @@ describe( 'utils', () => {
 							trend_change: 0,
 						},
 					},
+					jetpack_boost_scores: {
+						overall: 100,
+						mobile: 50,
+						desktop: 50,
+					},
 				},
 			];
 			expect( formatSites( sites ) ).toEqual( [
@@ -206,6 +211,10 @@ describe( 'utils', () => {
 					stats: {
 						type: 'stats',
 						data: sites[ 0 ].site_stats,
+					},
+					boost: {
+						type: 'boost',
+						data: sites[ 0 ].jetpack_boost_scores,
 					},
 					backup: {
 						status: 'success',
