@@ -470,6 +470,9 @@ const PatternAssembler: Step = ( { navigation, flow, stepName } ) => {
 				sections={ sections }
 				footer={ footer }
 				activePosition={ activePosition }
+				onDeleteSection={ onDeleteSection }
+				onMoveUpSection={ onMoveUpSection }
+				onMoveDownSection={ onMoveDownSection }
 			/>
 			<PremiumGlobalStylesUpgradeModal { ...globalStylesUpgradeModalProps } />
 		</div>
