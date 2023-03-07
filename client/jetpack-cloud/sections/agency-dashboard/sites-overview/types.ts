@@ -75,11 +75,13 @@ export interface SiteNode {
 export interface StatsNode {
 	type: AllowedTypes;
 	data: SiteStats;
+	status: AllowedStatusTypes | string;
 }
 
 export interface BoostNode {
 	type: AllowedTypes;
 	data: BoostObject;
+	status: AllowedStatusTypes | string;
 }
 export interface BackupNode {
 	type: AllowedTypes;
