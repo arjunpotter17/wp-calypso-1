@@ -26,7 +26,7 @@ const ScreenMain = ( { shouldUnlockGlobalStyles, onSelect, onContinueClick }: Pr
 					'Use our library of styles and patterns to design your own theme.'
 				) }
 			/>
-			<div className="screen-container__body">
+			<div className="screen-container__body screen-main__body">
 				<ItemGroup>
 					<NavigationButtonAsItem
 						path="/header"

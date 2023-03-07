@@ -23,7 +23,7 @@ const ScreenHeader = ( { selectedPattern, onSelect, onBack, onDoneClick }: Props
 					'Your header will be added to all pages and is usually where your site navigation lives.'
 				) }
 			/>
-			<div className="screen-container__body">
+			<div className="screen-container__body--no-margin">
 				<PatternSelector
 					patterns={ patterns }
 					onSelect={ onSelect }
@@ -31,6 +31,7 @@ const ScreenHeader = ( { selectedPattern, onSelect, onBack, onDoneClick }: Props
 					onDoneClick={ onDoneClick }
 					selectedPattern={ selectedPattern }
 					emptyPatternText={ translate( 'No Header' ) }
+					showDoneButton
 				/>
 			</div>
 		</>
