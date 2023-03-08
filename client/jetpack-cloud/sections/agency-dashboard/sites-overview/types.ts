@@ -42,7 +42,7 @@ export interface SiteStats {
 export interface BoostObject {
 	desktop: number;
 	mobile: number;
-	overall: any;
+	overall: number;
 }
 
 export interface Site {
@@ -80,7 +80,7 @@ export interface StatsNode {
 
 export interface BoostNode {
 	type: AllowedTypes;
-	data: BoostObject;
+	data: ReactChild;
 	status: AllowedStatusTypes | string;
 }
 export interface BackupNode {
