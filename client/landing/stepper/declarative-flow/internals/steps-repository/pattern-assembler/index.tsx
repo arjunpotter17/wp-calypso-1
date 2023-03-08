@@ -46,8 +46,6 @@ const PatternAssembler: Step = ( { navigation, flow, stepName } ) => {
 	const [ footer, setFooter ] = useState< Pattern | null >( null );
 	const [ sections, setSections ] = useState< Pattern[] >( [] );
 	const [ sectionPosition, setSectionPosition ] = useState< number | null >( null );
-	const [ categorySelected, setCategory ] = useState< string | null >( null );
-	const [ openPatternList, setOpenPatternList ] = useState< boolean | null >( null );
 	const wrapperRef = useRef< HTMLDivElement | null >( null );
 	const incrementIndexRef = useRef( 0 );
 	const [ activePosition, setActivePosition ] = useState( -1 );
@@ -63,9 +61,12 @@ const PatternAssembler: Step = ( { navigation, flow, stepName } ) => {
 	const siteSlugOrId = siteSlug ? siteSlug : siteId;
 	const allPatterns = useAllPatterns();
 	const sectionPatterns = useSectionPatterns();
+
+	// Fetching the categories so they are ready when ScreenCategoryList loads
 	const categoriesQuery = usePatternCategories( site?.ID );
 	const categories = ( categoriesQuery?.data || [] ) as Category[];
 	const sectionsMapByCategory = usePatternsMapByCategory( sectionPatterns, categories );
+
 	const stylesheet = selectedDesign?.recipe?.stylesheet || '';
 
 	const isEnabledColorAndFonts = isEnabled( 'pattern-assembler/color-and-fonts' );
@@ -252,13 +253,15 @@ const PatternAssembler: Step = ( { navigation, flow, stepName } ) => {
 		updateActivePatternPosition( position - 1 );
 	};
 
-	const onSelect = ( type: string, selectedPattern: Pattern | null ) => {
+	const onSelect = (
+		type: string,
+		selectedPattern: Pattern | null,
+		categorySelected: string | null
+	) => {
 		if ( selectedPattern ) {
 			// Inject the selected pattern category or the first category
 			// because it's used in tracks and as pattern name in the list
-			selectedPattern.category = categories.find(
-				( { name } ) => name === ( categorySelected || selectedPattern.categories[ 0 ] )
-			);
+			selectedPattern.category = categories.find( ( { name } ) => name === categorySelected );
 
 			if ( selectedPattern.category ) {
 				trackEventPatternSelect( {
@@ -292,14 +295,6 @@ const PatternAssembler: Step = ( { navigation, flow, stepName } ) => {
 		} );
 
 		goBack?.();
-	};
-
-	const handleClosePatternList = ( event: React.MouseEvent ) => {
-		// Click on large preview to close the PatternListPanel
-		if ( ( event.target as HTMLElement ).closest( '.pattern-large-preview' ) ) {
-			setOpenPatternList( null );
-			setCategory( null );
-		}
 	};
 
 	const onSubmit = () => {
@@ -388,13 +383,7 @@ const PatternAssembler: Step = ( { navigation, flow, stepName } ) => {
 	};
 
 	const stepContent = (
-		// eslint-disable-next-line jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events
-		<div
-			onClick={ handleClosePatternList }
-			className="pattern-assembler__wrapper"
-			ref={ wrapperRef }
-			tabIndex={ -1 }
-		>
+		<div className="pattern-assembler__wrapper" ref={ wrapperRef } tabIndex={ -1 }>
 			<NavigatorProvider className="pattern-assembler__sidebar" initialPath="/">
 				<NavigatorScreen path="/">
 					<ScreenMain
@@ -407,7 +396,7 @@ const PatternAssembler: Step = ( { navigation, flow, stepName } ) => {
 				<NavigatorScreen path="/header">
 					<ScreenHeader
 						selectedPattern={ header }
-						onSelect={ ( selectedPattern ) => onSelect( 'header', selectedPattern ) }
+						onSelect={ onSelect }
 						onBack={ () => onPatternSelectorBack( 'header' ) }
 						onDoneClick={ () => onDoneClick( 'header' ) }
 					/>
@@ -416,7 +405,7 @@ const PatternAssembler: Step = ( { navigation, flow, stepName } ) => {
 				<NavigatorScreen path="/footer">
 					<ScreenFooter
 						selectedPattern={ footer }
-						onSelect={ ( selectedPattern ) => onSelect( 'footer', selectedPattern ) }
+						onSelect={ onSelect }
 						onBack={ () => onPatternSelectorBack( 'footer' ) }
 						onDoneClick={ () => onDoneClick( 'footer' ) }
 					/>
@@ -438,15 +427,15 @@ const PatternAssembler: Step = ( { navigation, flow, stepName } ) => {
 							categories={ categories }
 							sectionsMapByCategory={ sectionsMapByCategory }
 							onDoneClick={ () => onDoneClick( 'section' ) }
-							setOpenPatternList={ setOpenPatternList }
-							setCategory={ setCategory }
-							categorySelected={ categorySelected }
 							replacePatternMode={ sectionPosition !== null }
+							selectedPattern={ sectionPosition !== null ? sections[ sectionPosition ] : null }
+							onSelect={ onSelect }
+							wrapperRef={ wrapperRef }
 						/>
 					) : (
 						<ScreenPatternList
 							selectedPattern={ sectionPosition !== null ? sections[ sectionPosition ] : null }
-							onSelect={ ( selectedPattern ) => onSelect( 'section', selectedPattern ) }
+							onSelect={ ( selectedPattern ) => onSelect( 'section', selectedPattern, 'section' ) }
 							onBack={ () => onPatternSelectorBack( 'section' ) }
 							onDoneClick={ () => onDoneClick( 'section' ) }
 						/>
@@ -494,20 +483,6 @@ const PatternAssembler: Step = ( { navigation, flow, stepName } ) => {
 				activePosition={ activePosition }
 			/>
 			<PremiumGlobalStylesUpgradeModal { ...globalStylesUpgradeModalProps } />
-			{ isEnabled( 'pattern-assembler/categories' ) && (
-				<AsyncLoad
-					require="./pattern-list-panel"
-					{ ...{
-						onSelect: ( selectedPattern: Pattern ) => onSelect( 'section', selectedPattern ),
-						selectedPattern: sectionPosition !== null ? sections[ sectionPosition ] : null,
-						patterns: sectionPatterns,
-						sectionPosition,
-						openPatternList,
-						categorySelected,
-						categories,
-					} }
-				/>
-			) }
 		</div>
 	);
 
