@@ -23,7 +23,7 @@ const ScreenFooter = ( { selectedPattern, onSelect, onBack, onDoneClick }: Props
 					'Your footer will be added to all pages and can be used to show information or links that will help visitors take the next step.'
 				) }
 			/>
-			<div className="screen-container__body--no-margin">
+			<div className="screen-container__body">
 				<PatternSelector
 					patterns={ patterns }
 					onSelect={ onSelect }
@@ -31,7 +31,6 @@ const ScreenFooter = ( { selectedPattern, onSelect, onBack, onDoneClick }: Props
 					onDoneClick={ onDoneClick }
 					selectedPattern={ selectedPattern }
 					emptyPatternText={ translate( 'No Footer' ) }
-					showDoneButton
 				/>
 			</div>
 		</>

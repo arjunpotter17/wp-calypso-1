@@ -1,3 +1,8 @@
+import { isEnabled } from '@automattic/calypso-config';
+import { Button } from '@automattic/components';
+import { __experimentalNavigatorBackButton as NavigatorBackButton } from '@wordpress/components';
+import { useTranslate } from 'i18n-calypso';
+import NavigatorHeader from './navigator-header';
 import PatternSelector from './pattern-selector';
 import { useSectionPatterns } from './patterns-data';
 import type { Pattern } from './types';
@@ -10,20 +15,36 @@ interface Props {
 }
 
 const ScreenPatternList = ( { selectedPattern, onSelect, onBack, onDoneClick }: Props ) => {
+	const translate = useTranslate();
 	const patterns = useSectionPatterns();
 
 	return (
-		<div className="screen-container__body--no-margin">
-			<PatternSelector
-				patterns={ patterns }
-				onSelect={ onSelect }
-				onBack={ onBack }
-				onDoneClick={ onDoneClick }
-				selectedPattern={ selectedPattern }
-				showDoneButton
-				showHeader
-			/>
-		</div>
+		<>
+			{ ! isEnabled( 'pattern-assembler/categories' ) && (
+				<NavigatorHeader
+					title={ selectedPattern ? translate( 'Replace pattern' ) : translate( 'Add patterns' ) }
+				/>
+			) }
+			<div className="screen-container__body">
+				<PatternSelector
+					patterns={ patterns }
+					onSelect={ onSelect }
+					onBack={ onBack }
+					onDoneClick={ onDoneClick }
+					selectedPattern={ selectedPattern }
+				/>
+			</div>
+			<div className="screen-container__footer">
+				<NavigatorBackButton
+					as={ Button }
+					className="pattern-assembler__button"
+					onClick={ onDoneClick }
+					primary
+				>
+					{ translate( 'Done' ) }
+				</NavigatorBackButton>
+			</div>
+		</>
 	);
 };
 
