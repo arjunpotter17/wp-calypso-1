@@ -323,6 +323,7 @@ const formatStatsData = ( site: Site ) => {
 	const statsData: StatsNode = {
 		type: 'stats',
 		data: site.site_stats,
+		status: 'active',
 	};
 	return statsData;
 };
