@@ -186,7 +186,6 @@ body.is-section-themes {
 
 .is-logged-out {
 	.themes__header::before,
-	.themes__content::before,
 	.themes__controls::before {
 		background-color: #e5f4ff;
 		content: "";
@@ -196,10 +195,6 @@ body.is-section-themes {
 		top: 0;
 		width: 100%;
 		z-index: -1;
-	}
-
-	.themes__content::before {
-		background-color: var(--studio-white);
 	}
 
 	.themes__header {
