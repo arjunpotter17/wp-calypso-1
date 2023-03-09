@@ -72,8 +72,11 @@ function Chart( {
 	}, [] );
 
 	const handleYAxisSizeChange = ( contentRect ) => {
+		if ( ! contentRect ) {
+			return;
+		}
 		setYAxisSize( ( prevSizing ) => {
-			const clientWidth = contentRect.width;
+			const clientWidth = contentRect?.width;
 			if ( ! prevSizing.hasResized || clientWidth !== prevSizing.clientWidth ) {
 				return { clientWidth, hasResized: true };
 			}
@@ -87,6 +90,9 @@ function Chart( {
 	// Needs to be memoized to avoid causing the `useWindowResizeCallback` custom hook to re-subscribe.
 	const handleContentRectChange = useCallback(
 		( contentRect ) => {
+			if ( ! contentRect ) {
+				return;
+			}
 			setSizing( ( prevSizing ) => {
 				const effectiveYAxisSize =
 					yAxisRef && yAxisRef.current ? yAxisRef.current.clientWidth : yAxisSize.clientWidth;
