@@ -14,7 +14,7 @@ interface Props {
 	onDoneClick: () => void;
 }
 
-const ScreenPatternList = ( { selectedPattern, onSelect, onBack, onDoneClick }: Props ) => {
+const ScreenPatternList = ( { selectedPattern, onSelect, onDoneClick }: Props ) => {
 	const translate = useTranslate();
 	const patterns = useSectionPatterns();
 
@@ -29,8 +29,6 @@ const ScreenPatternList = ( { selectedPattern, onSelect, onBack, onDoneClick }: 
 				<PatternSelector
 					patterns={ patterns }
 					onSelect={ onSelect }
-					onBack={ onBack }
-					onDoneClick={ onDoneClick }
 					selectedPattern={ selectedPattern }
 				/>
 			</div>
