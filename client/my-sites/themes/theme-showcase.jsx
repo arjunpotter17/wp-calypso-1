@@ -517,34 +517,32 @@ class ThemeShowcase extends Component {
 				<div className="themes__content" ref={ this.scrollRef }>
 					<QueryThemeFilters />
 					<div className="themes__controls">
-						<div className="themes__controls-content">
-							<SearchThemes
-								query={ filterString + search }
-								onSearch={ this.doSearch }
-								recordTracksEvent={ this.recordSearchThemesTracksEvent }
-							/>
-							{ tabFilters && (
-								<div className="theme__filters">
-									<ThemesToolbarGroup
-										items={ Object.values( tabFilters ) }
-										selectedKey={ this.state.tabFilter.key }
-										onSelect={ ( key ) =>
-											this.onFilterClick(
-												Object.values( tabFilters ).find( ( tabFilter ) => tabFilter.key === key )
-											)
-										}
+						<SearchThemes
+							query={ filterString + search }
+							onSearch={ this.doSearch }
+							recordTracksEvent={ this.recordSearchThemesTracksEvent }
+						/>
+						{ tabFilters && (
+							<div className="theme__filters">
+								<ThemesToolbarGroup
+									items={ Object.values( tabFilters ) }
+									selectedKey={ this.state.tabFilter.key }
+									onSelect={ ( key ) =>
+										this.onFilterClick(
+											Object.values( tabFilters ).find( ( tabFilter ) => tabFilter.key === key )
+										)
+									}
+								/>
+								{ premiumThemesEnabled && ! isMultisite && (
+									<SimplifiedSegmentedControl
+										key={ tier }
+										initialSelected={ tier || 'all' }
+										options={ tiers }
+										onSelect={ this.onTierSelect }
 									/>
-									{ premiumThemesEnabled && ! isMultisite && (
-										<SimplifiedSegmentedControl
-											key={ tier }
-											initialSelected={ tier || 'all' }
-											options={ tiers }
-											onSelect={ this.onTierSelect }
-										/>
-									) }
-								</div>
-							) }
-						</div>
+								) }
+							</div>
+						) }
 					</div>
 					<div className="themes__showcase">
 						{ this.renderBanner() }
