@@ -478,7 +478,6 @@ class ThemeShowcase extends Component {
 		const tabFilters = this.getTabFilters();
 		const tiers = this.getTiers();
 
-		// FIXME: Logged-in title should only be 'Themes'
 		return (
 			<div className="theme-showcase">
 				<DocumentHead title={ title } meta={ metas } />
@@ -487,53 +486,70 @@ class ThemeShowcase extends Component {
 					title={ this.props.analyticsPageTitle }
 					properties={ { is_logged_in: isLoggedIn } }
 				/>
-				{ isLoggedIn && (
-					<ThemesHeader
-						description={ translate(
-							'Select or update the visual design for your site. {{learnMoreLink}}Learn more{{/learnMoreLink}}.',
-							{
-								components: {
-									learnMoreLink: <InlineSupportLink supportContext="themes" showIcon={ false } />,
-								},
-							}
-						) }
-					>
-						<div className="themes__install-theme-button-container">
-							<InstallThemeButton />
-						</div>
-						<ScreenOptionsTab wpAdminPath="themes.php" />
-					</ThemesHeader>
-				) }
+				<ThemesHeader
+					title={ isLoggedIn ? translate( 'Themes' ) : translate( 'WordPress themes' ) }
+					description={
+						isLoggedIn
+							? translate(
+									'Select or update the visual design for your site. {{learnMoreLink}}Learn more{{/learnMoreLink}}.',
+									{
+										components: {
+											learnMoreLink: (
+												<InlineSupportLink supportContext="themes" showIcon={ false } />
+											),
+										},
+									}
+							  )
+							: translate(
+									'Beautiful and responsive themes for your photography site, portfolio, magazine, business website, or blog.'
+							  )
+					}
+				>
+					{ isLoggedIn && (
+						<>
+							<div className="themes__install-theme-button-container">
+								<InstallThemeButton />
+							</div>
+							<ScreenOptionsTab wpAdminPath="themes.php" />
+						</>
+					) }
+				</ThemesHeader>
 				<div className="themes__content" ref={ this.scrollRef }>
 					<QueryThemeFilters />
-					<SearchThemes
-						query={ filterString + search }
-						onSearch={ this.doSearch }
-						recordTracksEvent={ this.recordSearchThemesTracksEvent }
-					/>
-					{ tabFilters && (
-						<div className="theme__filters">
-							<ThemesToolbarGroup
-								items={ Object.values( tabFilters ) }
-								selectedKey={ this.state.tabFilter.key }
-								onSelect={ ( key ) =>
-									this.onFilterClick(
-										Object.values( tabFilters ).find( ( tabFilter ) => tabFilter.key === key )
-									)
-								}
+					<div className="themes__controls">
+						<div className="themes__controls-content">
+							<SearchThemes
+								query={ filterString + search }
+								onSearch={ this.doSearch }
+								recordTracksEvent={ this.recordSearchThemesTracksEvent }
 							/>
-							{ premiumThemesEnabled && ! isMultisite && (
-								<SimplifiedSegmentedControl
-									key={ tier }
-									initialSelected={ tier || 'all' }
-									options={ tiers }
-									onSelect={ this.onTierSelect }
-								/>
+							{ tabFilters && (
+								<div className="theme__filters">
+									<ThemesToolbarGroup
+										items={ Object.values( tabFilters ) }
+										selectedKey={ this.state.tabFilter.key }
+										onSelect={ ( key ) =>
+											this.onFilterClick(
+												Object.values( tabFilters ).find( ( tabFilter ) => tabFilter.key === key )
+											)
+										}
+									/>
+									{ premiumThemesEnabled && ! isMultisite && (
+										<SimplifiedSegmentedControl
+											key={ tier }
+											initialSelected={ tier || 'all' }
+											options={ tiers }
+											onSelect={ this.onTierSelect }
+										/>
+									) }
+								</div>
 							) }
 						</div>
-					) }
-					{ this.renderBanner() }
-					{ this.renderThemes( themeProps ) }
+					</div>
+					<div className="themes__showcase">
+						{ this.renderBanner() }
+						{ this.renderThemes( themeProps ) }
+					</div>
 					{ siteId && <QuerySitePlans siteId={ siteId } /> }
 					{ siteId && <QuerySitePurchases siteId={ siteId } /> }
 					<QueryProductsList />
