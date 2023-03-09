@@ -728,8 +728,6 @@ export default connect(
 			customerType: customerType,
 			hidePersonalPlan: props.hidePersonalPlan,
 			siteSlug,
-			// TODO CLK
-			shouldShowBiannualToggle: true,
 		};
 
 		return {
