@@ -5,7 +5,7 @@ import { Guide, GuidePage } from '@wordpress/components';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { useEffect } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
-import { store as pageTemplatesStore } from '../../starter-page-templates/src/store';
+import { store as pageTemplatesStore } from '../../../starter-page-templates/store';
 import blockPickerImage from './images/block-picker.svg';
 import editorImage from './images/editor.svg';
 import previewImage from './images/preview.svg';

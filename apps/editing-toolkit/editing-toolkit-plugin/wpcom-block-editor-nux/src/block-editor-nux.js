@@ -9,7 +9,7 @@ import { useDispatch, useSelect } from '@wordpress/data';
 import { useEffect, useState } from '@wordpress/element';
 import { registerPlugin } from '@wordpress/plugins';
 import { getQueryArg } from '@wordpress/url';
-import { store as pageTemplatesStore } from '../../starter-page-templates/src/store';
+import { store as pageTemplatesStore } from '../../starter-page-templates/store';
 import DraftPostModal from './draft-post-modal';
 import PostPublishedModal from './post-published-modal';
 import PurchaseNotice from './purchase-notice';
