@@ -26,6 +26,7 @@ import NavigatorListener from './navigator-listener';
 import PatternAssemblerContainer from './pattern-assembler-container';
 import PatternLargePreview from './pattern-large-preview';
 import { useAllPatterns, useSectionPatterns } from './patterns-data';
+import ScreenCategoryList from './screen-category-list';
 import ScreenFooter from './screen-footer';
 import ScreenHeader from './screen-header';
 import ScreenHomepage from './screen-homepage';
@@ -421,8 +422,7 @@ const PatternAssembler: Step = ( { navigation, flow, stepName } ) => {
 				</NavigatorScreen>
 				<NavigatorScreen path="/homepage/patterns">
 					{ isEnabled( 'pattern-assembler/categories' ) ? (
-						<AsyncLoad
-							require="./screen-category-list"
+						<ScreenCategoryList
 							categories={ categories }
 							sectionsMapByCategory={ sectionsMapByCategory }
 							onDoneClick={ () => onDoneClick( 'section' ) }
