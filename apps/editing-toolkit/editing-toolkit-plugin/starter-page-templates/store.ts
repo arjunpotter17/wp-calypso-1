@@ -22,4 +22,9 @@ export const selectors = {
 const STORE_KEY = 'automattic/starter-page-layouts';
 
 export const store = createReduxStore( STORE_KEY, { reducer, actions, selectors } );
-register( store );
+
+// TODO: Why is this needed?
+if ( ! starterPageTemplatesConfig.didRegisterStore ) {
+	register( store );
+	starterPageTemplatesConfig.didRegisterStore = true;
+}
