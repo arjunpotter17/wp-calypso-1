@@ -20,11 +20,9 @@ const ScreenPatternList = ( { selectedPattern, onSelect, onDoneClick }: Props ) 
 
 	return (
 		<>
-			{ ! isEnabled( 'pattern-assembler/categories' ) && (
-				<NavigatorHeader
-					title={ selectedPattern ? translate( 'Replace pattern' ) : translate( 'Add patterns' ) }
-				/>
-			) }
+			<NavigatorHeader
+				title={ selectedPattern ? translate( 'Replace pattern' ) : translate( 'Add patterns' ) }
+			/>
 			<div className="screen-container__body">
 				<PatternSelector
 					patterns={ patterns }
@@ -36,8 +34,8 @@ const ScreenPatternList = ( { selectedPattern, onSelect, onDoneClick }: Props ) 
 				<NavigatorBackButton
 					as={ Button }
 					className="pattern-assembler__button"
-					onClick={ onDoneClick }
 					primary
+					onClick={ onDoneClick }
 				>
 					{ translate( 'Done' ) }
 				</NavigatorBackButton>

@@ -37,9 +37,7 @@ const ScreenHeader = ( { selectedPattern, onSelect, onDoneClick }: Props ) => {
 				<NavigatorBackButton
 					as={ Button }
 					className="pattern-assembler__button"
-					onClick={ () => {
-						onDoneClick();
-					} }
+					onClick={ onDoneClick }
 					primary
 				>
 					{ translate( 'Done' ) }
