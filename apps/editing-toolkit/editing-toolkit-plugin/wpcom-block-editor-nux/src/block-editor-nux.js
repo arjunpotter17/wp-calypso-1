@@ -9,6 +9,7 @@ import { useDispatch, useSelect } from '@wordpress/data';
 import { useEffect, useState } from '@wordpress/element';
 import { registerPlugin } from '@wordpress/plugins';
 import { getQueryArg } from '@wordpress/url';
+import { store as pageTemplatesStore } from '../../starter-page-templates/src/store';
 import DraftPostModal from './draft-post-modal';
 import PostPublishedModal from './post-published-modal';
 import PurchaseNotice from './purchase-notice';
@@ -26,19 +27,18 @@ function WelcomeTour() {
 	const { show, isLoaded, variant, isManuallyOpened, isNewPageLayoutModalOpen } = useSelect(
 		( select ) => {
 			const welcomeGuideStoreSelect = select( 'automattic/wpcom-welcome-guide' );
-			const starterPageLayoutsStoreSelect = select( 'automattic/starter-page-layouts' );
 			return {
 				show: welcomeGuideStoreSelect.isWelcomeGuideShown(),
 				isLoaded: welcomeGuideStoreSelect.isWelcomeGuideStatusLoaded(),
 				variant: welcomeGuideStoreSelect.getWelcomeGuideVariant(),
 				isManuallyOpened: welcomeGuideStoreSelect.isWelcomeGuideManuallyOpened(),
-				isNewPageLayoutModalOpen: starterPageLayoutsStoreSelect?.isOpen(), // Handle the case where SPT is not initalized.
+				isNewPageLayoutModalOpen: select( pageTemplatesStore ).isOpen(),
 			};
 		},
 		[]
 	);
 
-	const setOpenState = useDispatch( 'automattic/starter-page-layouts' )?.setOpenState;
+	const { setOpenState } = useDispatch( pageTemplatesStore );
 
 	const { fetchWelcomeGuideStatus } = useDispatch( 'automattic/wpcom-welcome-guide' );
 

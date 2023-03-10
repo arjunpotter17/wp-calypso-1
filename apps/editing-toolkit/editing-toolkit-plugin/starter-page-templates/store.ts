@@ -1,4 +1,4 @@
-import { registerStore } from '@wordpress/data';
+import { register, createReduxStore } from '@wordpress/data';
 import type { Reducer } from 'redux';
 
 type OpenState = 'CLOSED' | 'OPEN_FROM_ADD_PAGE' | 'OPEN_FOR_BLANK_CANVAS';
@@ -21,12 +21,5 @@ export const selectors = {
 
 const STORE_KEY = 'automattic/starter-page-layouts';
 
-registerStore( STORE_KEY, {
-	// In reality the store can dispatch any action, however `reducer` has a
-	// strongly typed action type to make the typings inside the function
-	// easier to work with.
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	reducer: reducer as any,
-	actions,
-	selectors,
-} );
+export const store = createReduxStore( STORE_KEY, { reducer, actions, selectors } );
+register( store );

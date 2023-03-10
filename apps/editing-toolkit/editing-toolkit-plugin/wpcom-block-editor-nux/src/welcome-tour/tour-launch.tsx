@@ -6,7 +6,7 @@ import { useDispatch, useSelect, dispatch } from '@wordpress/data';
 import { useEffect, useMemo } from '@wordpress/element';
 import useSiteIntent from '../../../dotcom-fse/lib/site-intent/use-site-intent';
 import useSitePlan from '../../../dotcom-fse/lib/site-plan/use-site-plan';
-import { selectors as starterPageTemplatesSelectors } from '../../../starter-page-templates/store';
+import { store as pageTemplatesStore } from '../../../starter-page-templates/store';
 import { selectors as wpcomBlockEditorNavSidebarSelectors } from '../../../wpcom-block-editor-nav-sidebar/src/store';
 import { selectors as wpcomWelcomeGuideSelectors } from '../store';
 import { getEditorType } from './get-editor-type';
@@ -16,7 +16,6 @@ import type { SelectFromMap } from '@automattic/data-stores';
 import type { WpcomConfig } from '@automattic/tour-kit';
 import type { Rect, Placement } from '@popperjs/core';
 
-type StarterPageTemplatesSelectors = SelectFromMap< typeof starterPageTemplatesSelectors >;
 type WpcomBlockEditorNavSidebarSelectors = SelectFromMap<
 	typeof wpcomBlockEditorNavSidebarSelectors
 >;
@@ -34,10 +33,7 @@ function LaunchWpcomWelcomeTour() {
 			show: (
 				select( 'automattic/wpcom-welcome-guide' ) as WpcomWelcomeGuideSelectors
 			 ).isWelcomeGuideShown(),
-			// Handle the case where the new page pattern modal is initialized and open
-			isNewPageLayoutModalOpen:
-				select( 'automattic/starter-page-layouts' ) &&
-				( select( 'automattic/starter-page-layouts' ) as StarterPageTemplatesSelectors ).isOpen(),
+			isNewPageLayoutModalOpen: select( pageTemplatesStore ).isOpen(),
 			isManuallyOpened: (
 				select( 'automattic/wpcom-welcome-guide' ) as WpcomWelcomeGuideSelectors
 			 ).isWelcomeGuideManuallyOpened(),
