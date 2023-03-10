@@ -224,6 +224,7 @@ describe( 'utils', () => {
 					},
 					stats: {
 						type: 'stats',
+						status: 'active',
 						data: sites[ 0 ].site_stats,
 					},
 					boost: {
