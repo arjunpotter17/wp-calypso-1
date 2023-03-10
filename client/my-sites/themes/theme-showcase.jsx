@@ -487,7 +487,11 @@ class ThemeShowcase extends Component {
 					properties={ { is_logged_in: isLoggedIn } }
 				/>
 				<ThemesHeader
-					title={ isLoggedIn ? translate( 'Themes' ) : translate( 'WordPress themes' ) }
+					title={
+						isLoggedIn
+							? translate( 'Themes' )
+							: translate( 'Find the perfect theme for your website' )
+					}
 					description={
 						isLoggedIn
 							? translate(
@@ -501,7 +505,7 @@ class ThemeShowcase extends Component {
 									}
 							  )
 							: translate(
-									'Beautiful and responsive themes for your photography site, portfolio, magazine, business website, or blog.'
+									'Beautiful and responsive WordPress.com themes. Choose from free and premium options for all types of websites. Then, install the one that is right for you.'
 							  )
 					}
 				>

@@ -236,6 +236,11 @@ body.is-section-themes {
 	.search-themes-card {
 		border-radius: 4px;
 		max-width: 450px;
+		transition: max-width 0.2s ease-out;
+
+		&.is-suggestions-open {
+			max-width: 100%;
+		}
 
 		.search,
 		.keyed-suggestions {
@@ -250,7 +255,10 @@ body.is-section-themes {
 			margin: 0;
 		}
 
-		.keyed-suggestions__category,
+		.keyed-suggestions__category {
+			background-color: var(--studio-blue-5);
+		}
+
 		.keyed-suggestions__value.is-selected {
 			background-color: rgba(var(--studio-blue-rgb), 0.1);
 		}
