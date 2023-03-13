@@ -1,6 +1,6 @@
 import { hydrate, QueryClient } from '@tanstack/react-query';
+import { persistQueryClient } from '@tanstack/react-query-persist-client';
 import { throttle } from 'lodash';
-import { persistQueryClient } from 'react-query/persistQueryClient-experimental';
 import { shouldPersist, MAX_AGE, SERIALIZE_THROTTLE } from 'calypso/state/initial-state';
 import { getPersistedStateItem, storePersistedStateItem } from 'calypso/state/persisted-state';
 import { shouldDehydrateQuery } from './should-dehydrate-query';
@@ -19,7 +19,7 @@ export async function hydrateBrowserState(
 ): Promise< void > {
 	if ( shouldPersist() ) {
 		const storeKey = `query-state-${ userId ?? 'logged-out' }`;
-		const persistor = {
+		const persister = {
 			persistClient: throttle(
 				( state ) => storePersistedStateItem( storeKey, state ),
 				SERIALIZE_THROTTLE,
@@ -32,7 +32,7 @@ export async function hydrateBrowserState(
 		};
 		await persistQueryClient( {
 			queryClient,
-			persistor,
+			persister,
 			maxAge: MAX_AGE,
 			dehydrateOptions: {
 				shouldDehydrateQuery,
