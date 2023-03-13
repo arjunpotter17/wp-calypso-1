@@ -1,7 +1,7 @@
 import type { ReactChild } from 'react';
 
 // All types based on which the data is populated on the agency dashboard table rows
-export type AllowedTypes = 'site' | 'stats' | 'backup' | 'scan' | 'monitor' | 'plugin';
+export type AllowedTypes = 'site' | 'stats' | 'boost' | 'backup' | 'scan' | 'monitor' | 'plugin';
 
 // Site column object which holds key and title of each column
 export type SiteColumns = Array< {
@@ -68,6 +68,9 @@ export interface SiteNode {
 export interface StatsNode {
 	type: AllowedTypes;
 	data: SiteStats;
+}
+export interface BoostNode {
+	type: AllowedTypes;
 }
 export interface BackupNode {
 	type: AllowedTypes;
