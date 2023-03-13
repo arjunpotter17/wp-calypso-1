@@ -1,6 +1,6 @@
+import { useQueryClient } from '@tanstack/react-query';
 import { useTranslate } from 'i18n-calypso';
 import { useCallback, useState, useContext } from 'react';
-import { useQueryClient } from 'react-query';
 import { useDispatch } from 'react-redux';
 import { recordTracksEvent } from 'calypso/state/analytics/actions';
 import { setSiteMonitorStatus } from 'calypso/state/jetpack-agency-dashboard/actions';
